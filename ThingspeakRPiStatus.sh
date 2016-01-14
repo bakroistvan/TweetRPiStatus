@@ -78,9 +78,7 @@ if __name__ == "__main__":
                 'field4': str(freeMemPerc),
                 'key': api_key
             })
-
-            getWifiClientNum()
-
+            
             conn = httplib.HTTPConnection("api.thingspeak.com:80")
             conn.request("POST", "/update", params, headers)
             response = conn.getresponse()
