@@ -67,7 +67,7 @@ if __name__ == "__main__":
     #read config file for twitter keys (so not to include them on github)
     try:
         config = ConfigParser.ConfigParser()
-        if config.read('./rpi_status.conf'):
+        if config.read(os.path.dirname(os.path.realpath(__file__)) + "/rpi_status.conf"):
             api_key = config.get('ThingspeakAccount', 'api_key')
             
             headers = {"Content-type": "application/x-www-form-urlencoded","Accept": "text/plain"}
