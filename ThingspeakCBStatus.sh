@@ -14,9 +14,9 @@ def getCPUtemperature():
 #        return float(s.split('=')[1][:-3])
 #    except:
 #        return 0
-    if os.path.isfile('/opt/vc/bin/vcgencmd'):
-        res = os.popen("cat /sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/temp1_input | awk '{ printf (\"%0.1f\n\",$1/1000); }'").readline()
-        return(res)
+    if os.path.isfile('/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/temp1_input'):
+        res = float(os.popen("cat /sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/temp1_input").readline())/1000
+        return(str(res))
     else:
         return 'N/A'
 
@@ -79,7 +79,7 @@ if __name__ == "__main__":
                 'key': api_key
             })
             
-            conn = httplib.HTTPSConnection("api.thingspeak.com:80")
+            conn = httplib.HTTPConnection("api.thingspeak.com:80")
             conn.request("POST", "/update", params, headers)
             response = conn.getresponse()
             conn.close()
