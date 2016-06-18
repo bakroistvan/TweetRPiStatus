@@ -31,19 +31,23 @@ def getRAMinfo():
         i = i + 1
         line = p.readline()
         if i==3:
-		return(line.split()[1:4])
+            return(line.split()[1:4])
 
 # Return % of CPU used by user as a character string
 def getCPUuse():
     # Return the inverse of CPU idle, instead of part of usage
-	cpuUsePrc=str(100-float(os.popen("top -n1 -b | awk '/Cpu\(s\):/ {print $8}'").readline().strip()))
-	return(cpuUsePrc)
+    cpuUsePrc=str(100-float(os.popen("top -n1 -b | awk '/Cpu\(s\):/ {print $8}'").readline().strip()))
+    return(cpuUsePrc)
 
 # Return information about disk space as a list (unit included)
 # Index 0: total disk space
 # Index 1: used disk space
 # Index 2: remaining disk space
 # Index 3: percentage of disk used
+def getUsersCount():
+    p = os.popen("who | wc -l").readline()
+    return(p)
+
 def getDiskSpace():
     p = os.popen("df /")
     line = p.readline()
@@ -61,7 +65,7 @@ if __name__ == "__main__":
     #get hostname
     hostname = os.popen('hostname').readline().rstrip()
     #build the info string
-    sysInfoString = hostname + ": CPUTemp " + getCPUtemperature() + ", CPU U " + getCPUuse()+ "%, FreeDisk " + getDiskSpace()[2] + ", FreeMemPrc " + str(freeMemPerc) + "%"
+    sysInfoString = hostname + ": CPUTemp " + getCPUtemperature() + ", CPU U " + getCPUuse()+ "%, FreeDisk " + getDiskSpace()[2] + ", FreeMemPrc " + str(freeMemPerc) + "%" + ", Users " + getUsersCount()
     print(sysInfoString)
 
     #read config file for twitter keys (so not to include them on github)
@@ -76,6 +80,7 @@ if __name__ == "__main__":
                 'field2': getCPUuse(),
                 'field3': getDiskSpace()[2],
                 'field4': str(freeMemPerc),
+                'field5': getUsersCount(),
                 'key': api_key
             })
             
