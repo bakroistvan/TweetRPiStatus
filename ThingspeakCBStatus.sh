@@ -55,7 +55,7 @@ def getDiskSpace():
     return(line.split()[1:5])
 
 def getDiskSpace():
-    p = os.popen("hddtemp /dev/sda -n")
+    p = os.popen("sudo hddtemp /dev/sda -n")
     line = p.readline()
     return(line)
 
