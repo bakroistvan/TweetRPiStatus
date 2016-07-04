@@ -54,6 +54,11 @@ def getDiskSpace():
     line = p.readline()
     return(line.split()[1:5])
 
+def getDiskSpace():
+    p = os.popen("hddtemp /dev/sda -n")
+    line = p.readline()
+    return(line)
+
 
 #Main program
 if __name__ == "__main__":
@@ -81,6 +86,7 @@ if __name__ == "__main__":
                 'field3': getDiskSpace()[2],
                 'field4': str(freeMemPerc),
                 'field5': getUsersCount(),
+                'field6': getDiskSpace(),
                 'key': api_key
             })
             
